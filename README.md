@@ -375,3 +375,289 @@ d19badc HEAD@{8}: rebase: fast-forward
 a000c93 HEAD@{9}: rebase (start): checkout a000c93511f759baae4e3111bcd778d761b27
 f0c
 ```
+
+## **Exerices 2**:
+
+## _Feture Branch Creation_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git switch -C ft/new-feature
+Switched to a new branch 'ft/new-feature'
+```
+
+## _Working on the Feature Branch_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/new-feature)
+$ touch feature.txt
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/new-feature)
+$ echo "adding new content onthe feature file" > feature.txt
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/new-feature)
+$ cat feature.txt
+adding new content onthe feature file
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/new-feature)
+$ git status
+On branch ft/new-feature
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        feature.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/new-feature)
+$ git add .
+warning: in the working copy of 'feature.txt', LF will be replaced by CRLF the n
+ext time Git touches it
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/new-feature)
+$ git status
+On branch ft/new-feature
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   feature.txt
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/new-feature)
+$ git commit -m "Implemented core functionality for new feature"
+[ft/new-feature 89e3a0c] Implemented core functionality for new feature
+ 1 file changed, 1 insertion(+)
+ create mode 100644 feature.txt
+
+```
+
+## _Switching Back and Making More Changes_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/new-feature)
+$ git checkout main
+Switched to branch 'main'
+Your branch and 'origin/main' have diverged,
+and have 2 and 1 different commits each, respectively.
+  (use "git pull" if you want to integrate the remote branch with yours)
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ touch readme.txt
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ echo "Holla, I'm Yves and i am doing introductions" > readme.txt
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ cat readme.txt
+Holla, I'm Yves and i am doing introductions
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git add readme.txt
+warning: in the working copy of 'readme.txt', LF will be replaced by CRLF the ne
+xt time Git touches it
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git status
+On branch main
+Your branch and 'origin/main' have diverged,
+and have 2 and 1 different commits each, respectively.
+  (use "git pull" if you want to integrate the remote branch with yours)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   readme.txt
+
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git commit -m "Updated project readme"
+[main 679c24f] Updated project readme
+ 1 file changed, 1 insertion(+)
+ create mode 100644 readme.txt
+
+```
+
+## _Local vd Remote Branches_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git push origin ft/new-feature
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 7 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (9/9), 828 bytes | 207.00 KiB/s, done.
+Total 9 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote:
+remote: Create a pull request for 'ft/new-feature' on GitHub by visiting:
+remote:      https://github.com/Preacher-Y/git-advanced/pull/new/ft/new-feature
+remote:
+To https://github.com/Preacher-Y/git-advanced.git
+ * [new branch]      ft/new-feature -> ft/new-feature
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git branch -r
+  origin/ft/new-feature
+  origin/main
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git pull origin main
+From https://github.com/Preacher-Y/git-advanced
+ * branch            main       -> FETCH_HEAD
+fatal: refusing to merge unrelated histories
+
+```
+
+## _Branch Deletion_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git merge -m "merging ft/new-feature => main " ft/new-feature
+Merge made by the 'ort' strategy.
+ feature.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 feature.txt
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git branch -D ft/new-feature
+Deleted branch ft/new-feature (was 89e3a0c).
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git branch
+  ft/branch
+* main
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git remote prune origin
+Pruning origin
+URL: https://github.com/Preacher-Y/git-advanced.git
+ * [pruned] origin/ft/new-feature
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git branch -r
+  origin/main
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git pull
+Already up to date.
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git push origin main
+Enumerating objects: 10, done.
+Counting objects: 100% (10/10), done.
+Delta compression using up to 7 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (7/7), 881 bytes | 440.00 KiB/s, done.
+Total 7 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (2/2), done.
+To https://github.com/Preacher-Y/git-advanced.git
+   c359cfe..5e5fcee  main -> main
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git pull
+Already up to date.
+```
+
+## _Creating a Branch from a Commit_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git log --oneline
+5e5fcee (HEAD -> main, origin/main) Merge branch 'main' of https://github.com/Preache
+r-Y/git-advanced "the merge successfull"
+ec0a805 merging ft/new-feature => main
+679c24f Updated project readme
+89e3a0c Implemented core functionality for new feature
+c359cfe Create README.md
+adee061 Implemented test 5
+d19badc chore: Create third and fourth files
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git checkout -b ft/new-branch-from-commit 679c24f
+Switched to a new branch 'ft/new-branch-from-commit'
+
+```
+
+## _Branch Merging_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/new-branch-from-commit)
+$ touch from-commit.txt
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/new-branch-from-commit)
+$ echo "I love messing around, and as you know the more you mess around the more you found out '-)" > from-commit.txt
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/new-branch-from-commit)
+$ git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git merge -m "merging ft/new-branch-from-commit => main " ft/new-branch-from-commit
+Merge made by the 'ort' strategy.
+ from-commit.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 from-commit.txt
+
+```
+
+## _Branch Rebase_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git checkout ft/new-branch-from-commit
+Switched to branch 'ft/new-branch-from-commit'
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/new-branch-from-commit)
+$ git rebase main
+Successfully rebased and updated refs/heads/ft/new-branch-from-commit
+
+```
+
+## _Branch Renaming_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git branch -m ft/new-branch-from-commit ft/improved-branch-name
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git branch
+  ft/branch
+  ft/improved-branch-name
+* main
+
+```
+
+## _Checking Out Detached HEAD_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/improved-branch-name)
+$ git log --oneline
+5e5fcee (HEAD -> ft/improved-branch-name, origin/main, main) Merge branch 'main' of h
+ttps://github.com/Preacher-Y/git-advanced "the merge successfull"
+ec0a805 merging ft/new-feature => main
+679c24f Updated project readme
+89e3a0c Implemented core functionality for new feature
+c359cfe Create README.md
+adee061 Implemented test 5
+d19badc chore: Create third and fourth files
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/improved-branch-name)
+$ git checkout ec0a805
+A       from-commit.txt
+Note: switching to 'ec0a805'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at ec0a805 merging ft/new-feature => main
+
+```
