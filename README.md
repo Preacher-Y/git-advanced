@@ -661,3 +661,244 @@ Turn off this advice by setting config variable advice.detachedHead to false
 HEAD is now at ec0a805 merging ft/new-feature => main
 
 ```
+
+##  **Exercise 3**
+
+## _Stashing Changes_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/improved-branch-name)
+$ git checkout main
+A       from-commit.txt
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git stash
+Saved working directory and index state WIP on main: 5e5fcee Merge branch 'main'
+ of https://github.com/Preacher-Y/git-advanced "the merge successfull"
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git stash list
+stash@{0}: WIP on main: 5e5fcee Merge branch 'main' of https://github.com/Preach
+er-Y/git-advanced "the merge successfull"
+```
+
+## _Retrieving Stashed Changes_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git stash pop
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   from-commit.txt
+
+Dropped refs/stash@{0} (9fddbf5faa378cb700f6842d4d7971b68e4dcf83)
+```
+
+## _Branch Merging Conflicts(Creating conflicts) & Solving the issue_
+```bash 
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ ls
+README.md  feature.txt  for-merge.txt  readme.txt  test3.md  test5.md
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ cat for-merge.txt
+This is the branch file
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ echo "This is the main branch file" > for-merge.txt
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git commit -a -m "to cause a conflict"
+warning: in the working copy of 'for-merge.txt', LF will be replaced by CRLF the
+ next time Git touches it
+[main 3b6d1a4] to cause a conflict
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git checkout ft/branch
+Switched to branch 'ft/branch'
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/branch)
+$ echo "This is the ft/branch branch file" > for-merge.txt
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/branch)
+$ git commint -a -m "for conflict"
+git: 'commint' is not a git command. See 'git --help'.
+
+The most similar command is
+        commit
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (ft/branch)
+$ git commit -a -m "for conflict"
+warning: in the working copy of 'for-merge.txt', LF will be replaced by CRLF the next
+ time Git touches it
+[ft/branch 2c78037] for conflict
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git merge -m "Check conflict" ft/branch
+Auto-merging for-merge.txt
+CONFLICT (add/add): Merge conflict in for-merge.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+# =============================================
+# Solving The issue
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main|MERGING)
+$ git mergetool
+
+This message is displayed because 'merge.tool' is not configured.
+See 'git mergetool --tool-help' or 'git help config' for more details.
+'git mergetool' will now attempt to use one of the following tools:
+opendiff kdiff3 tkdiff xxdiff meld tortoisemerge gvimdiff diffuse diffmerge ecmerge p
+4merge araxis bc codecompare smerge emerge vimdiff nvimdiff
+Merging:
+for-merge.txt
+
+Normal merge conflict for 'for-merge.txt':
+  {local}: created file
+  {remote}: created file
+Hit return to start merge resolution tool (vimdiff):
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main|MERGING)
+$ git commit -a -m "i dont know"
+[main fe3cfb6] i dont know
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git merge -m "Check conflict" ft/branch
+Already up to date.
+```
+
+## _Understanding Detached HEAD state_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git log --oneline
+fe3cfb6 (HEAD -> main) i dont know
+2c78037 (ft/branch) for conflict
+3b6d1a4 to cause a conflict
+8ae7a8f lets got
+82300e6 for confict with merging
+e7202ea Merge branch 'ft/branch'
+5e5fcee (origin/main, origin/ft/improved-branch-name) Merge branch 'main' of https://
+github.com/Preacher-Y/git-advanced "the merge successfull"
+ec0a805 merging ft/new-feature => main
+679c24f Updated project readme
+89e3a0c Implemented core functionality for new feature
+c359cfe Create README.md
+adee061 Implemented test 5
+4e7fa07 Implemented test 5
+d19badc chore: Create third and fourth files
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git checkout -b detach-head/branch 3b6d1a4
+Switched to a new branch 'detach-head/branch'
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (detach-head/branch)
+$ ls
+README.md    for-merge.txt       readme.txt  test5.md
+feature.txt  for-merge.txt.orig  test3.md
+```
+
+## _Ignoring Files/Directories_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ touch .gitignore
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ echo "/tmp" >> .gitignore
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ cat .gitignore
+/tmp
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 7 commits.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .gitignore
+        for-merge.txt.orig
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git add .gitignore
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next ti
+me Git touches it
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 7 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        for-merge.txt.orig
+
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git commit -m "Adding gitignore"
+[main c070621] Adding gitignore
+ 1 file changed, 1 insertion(+)
+ create mode 100644 .gitignore
+```
+
+# _Working with Tags_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git tag v1.0
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git tag
+v1.0
+```
+# _Listing & Deleting Tags_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git tag
+v1.0
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git tag -d v1.0
+Deleted tag 'v1.0' (was c070621)
+
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git tag
+```
+
+# _Pushing Local Work to Remote_
+
+```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git push origin main
+Enumerating objects: 26, done.
+Counting objects: 100% (26/26), done.
+Delta compression using up to 7 threads
+Compressing objects: 100% (18/18), done.
+Writing objects: 100% (23/23), 2.23 KiB | 208.00 KiB/s, done.
+Total 23 (delta 6), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (6/6), completed with 1 local object.
+To https://github.com/Preacher-Y/git-advanced.git
+   5d09dcb..d2c9036  main -> main
+```
+
+# _Pulling Changes from Remote_
+
+```bash
