@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 This is the main branch file
+=======
+This is the ft/branch branch file
+>>>>>>> ft/branch
