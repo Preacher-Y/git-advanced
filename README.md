@@ -902,3 +902,21 @@ To https://github.com/Preacher-Y/git-advanced.git
 # _Pulling Changes from Remote_
 
 ```bash
+PREACHER@Preacher MINGW64 /e/The Gym/git-advanced (main)
+$ git pull origin main
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (3/3), 2.60 KiB | 126.00 KiB/s, done.
+From https://github.com/Preacher-Y/git-advanced
+ * branch            main       -> FETCH_HEAD
+   d2c9036..190277c  main       -> origin/main
+Updating d2c9036..190277c
+Fast-forward
+ README.md | 241 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 241 insertions(+)
+```
+
+
+# That Is All! Thank you For Your Time!! 
